@@ -28,17 +28,13 @@
     <p id="result"></p>
 
     <script>
-        // Variable to hold the jsqr library
-        let jsqr;
-
         // Assign the script source to a variable
-        const jsqrScriptSrc = "https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsqr.min.js";
+        const jsqrScriptSrc = "https://cdn.rawgit.com/cozmo/jsQR/master/dist/jsQR.js"; // Direct link
 
         // Create a script element
         const script = document.createElement("script");
         script.src = jsqrScriptSrc;
         script.onload = function() {
-            jsqr = window.jsqr; // Assign the loaded library to the jsqr variable
             console.log("jsqr library loaded successfully.");
             initializeApp(); // Call the initialization function once the library is loaded
         };
@@ -79,7 +75,8 @@
                         ctx.drawImage(img, 0, 0);
 
                         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                        const code = jsqr(imageData.data, canvas.width, canvas.height); // Use the variable
+                        // Call jsQR directly from the global scope
+                        const code = window.jsQR(imageData.data, canvas.width, canvas.height); 
 
                         if (code && code.data) {
                             const decodedText = code.data;
