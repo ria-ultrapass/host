@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Reader</title>
+    <title>QR Code Upload</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsqr.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            text-align: center;
         }
         #result {
             margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -38,7 +40,11 @@
                     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                     const code = jsqr(imageData.data, canvas.width, canvas.height);
                     if (code) {
-                        document.getElementById('result').innerText = `Decoded text: ${code.data}`;
+                        const decodedText = code.data;
+                        document.getElementById('result').innerText = `Decoded text: ${decodedText}`;
+                        
+                        // Store the decoded text in localStorage
+                        localStorage.setItem('qrCodeText', decodedText);
                     } else {
                         document.getElementById('result').innerText = 'No QR code found.';
                     }
@@ -47,6 +53,14 @@
             };
             reader.readAsDataURL(file);
         });
+
+        // Optional: Display the stored value on page load
+        window.onload = function() {
+            const storedText = localStorage.getItem('qrCodeText');
+            if (storedText) {
+                document.getElementById('result').innerText = `Stored QR Code Text: ${storedText}`;
+            }
+        };
     </script>
 </body>
 </html>
