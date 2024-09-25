@@ -98,13 +98,11 @@
                 reader.readAsDataURL(selectedFile);
             });
 
-            // Optional: Display the stored value on page load
-            const storedText = localStorage.getItem('qrCodeText');
-            if (storedText) {
-                document.getElementById('result').innerText = `Stored QR Code Text: ${storedText}`;
+            if (code && code.data) {
+                const decodedText = code.data;
+                document.getElementById('result').innerText = `Decoded text: ${decodedText}`;
+                localStorage.setItem('qrCodeText', decodedText); // Store QR code text
             }
-            return storedText;
-
         }
     </script>
 </body>
