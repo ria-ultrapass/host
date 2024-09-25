@@ -33,6 +33,11 @@
 
         document.getElementById('file-input').addEventListener('change', function(event) {
             selectedFile = event.target.files[0]; // Store the selected file
+            if (selectedFile) {
+                document.getElementById('result').innerText = `File selected: ${selectedFile.name}`;
+            } else {
+                document.getElementById('result').innerText = 'No file selected.';
+            }
         });
 
         document.getElementById('upload-button').addEventListener('click', function() {
@@ -63,6 +68,12 @@
                 };
                 img.src = e.target.result;
             };
+
+            reader.onerror = function(error) {
+                console.error('Error reading file:', error);
+                document.getElementById('result').innerText = 'Error reading file.';
+            };
+
             reader.readAsDataURL(selectedFile);
         });
 
