@@ -15,6 +15,11 @@
             margin-top: 20px;
             font-weight: bold;
         }
+        input[type="file"] {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -42,8 +47,6 @@
                     if (code) {
                         const decodedText = code.data;
                         document.getElementById('result').innerText = `Decoded text: ${decodedText}`;
-                        
-                        // Store the decoded text in localStorage
                         localStorage.setItem('qrCodeText', decodedText);
                     } else {
                         document.getElementById('result').innerText = 'No QR code found.';
