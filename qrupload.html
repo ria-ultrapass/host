@@ -15,22 +15,31 @@
             margin-top: 20px;
             font-weight: bold;
         }
-        input[type="file"] {
-            margin-top: 20px;
+        input[type="file"], button {
             padding: 10px;
             font-size: 16px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Upload QR Code Image</h1>
     <input type="file" id="file-input" accept="image/*" />
+    <button id="upload-button">Process Upload</button>
     <p id="result"></p>
 
     <script>
+        let selectedFile;
+
         document.getElementById('file-input').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            selectedFile = event.target.files[0]; // Store the selected file
+        });
+
+        document.getElementById('upload-button').addEventListener('click', function() {
+            if (!selectedFile) {
+                document.getElementById('result').innerText = 'Please select a file first.';
+                return;
+            }
 
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -54,7 +63,7 @@
                 };
                 img.src = e.target.result;
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(selectedFile);
         });
 
         // Optional: Display the stored value on page load
